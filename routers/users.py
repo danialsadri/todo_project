@@ -8,7 +8,7 @@ from schemas import users as schemas
 router = APIRouter()
 
 
-@router.get('/user/read/{user_id}/', response_model=schemas.User, status_code=status.HTTP_200_OK)
+@router.get('/read/{user_id}/', response_model=schemas.User, status_code=status.HTTP_200_OK)
 async def user_read(user_id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if user is None:
@@ -16,7 +16,7 @@ async def user_read(user_id: int, db: Session = Depends(get_db)):
     return user
 
 
-@router.post('/user/create/', response_model=schemas.User, status_code=status.HTTP_201_CREATED)
+@router.post('/create/', response_model=schemas.User, status_code=status.HTTP_201_CREATED)
 async def user_create(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user_username = db.query(models.User).filter(models.User.username == user.username).first()
     if db_user_username:
